@@ -71,7 +71,7 @@
         }
         
         {
-            _backButton = [[ORKBackButton alloc] initWithTitle:@"Back"];
+            _backButton = [[ORKBackButton alloc] initWithTitle:ORKLocalizedString(@"AX_BUTTON_BACK", nil)];
             _backButton.alpha = 0;
             _backButton.exclusiveTouch = YES;
             _backButton.translatesAutoresizingMaskIntoConstraints = NO;
