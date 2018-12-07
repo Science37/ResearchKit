@@ -50,6 +50,7 @@
 
 @implementation ORKSurveyAnswerCellForNumber {
     NSNumberFormatter *_numberFormatter;
+    NSNumber *_defaultNumericAnswer;
 }
 
 - (ORKUnitTextField *)textField {
@@ -219,28 +220,39 @@
     return isValid;
 }
 
--(void)displayFormattedNumber {
-    [self answerDidChange];
-    ORKNumericAnswerFormat *answerFormat = (ORKNumericAnswerFormat *)[self.step impliedAnswerFormat];
-    NSString *formattedText = [answerFormat scaleFormattedText:[self.textField text] decimalSeparator:[_numberFormatter decimalSeparator]];
-    self.textField.text = formattedText;
+- (void) assignDefaultAnswer {
+    if (_defaultNumericAnswer) {
+        [self ork_setAnswer:_defaultNumericAnswer];
+        if (self.textField) {
+            self.textField.text = [_numberFormatter stringFromNumber:_defaultNumericAnswer];
+        }
+    }
 }
 
 - (void)answerDidChange {
     id answer = self.answer;
     ORKAnswerFormat *answerFormat = [self.step impliedAnswerFormat];
     ORKNumericAnswerFormat *numericFormat = (ORKNumericAnswerFormat *)answerFormat;
-    NSString *displayValue = (answer && answer != ORKNullAnswerValue()) ? answer : nil;
-    if ([answer isKindOfClass:[NSNumber class]]) {
-        displayValue = [_numberFormatter stringFromNumber:answer];
-    }
-   
+    
+    _defaultNumericAnswer = numericFormat.defaultNumericAnswer;
     NSString *placeholder = self.step.placeholder ? : ORKLocalizedString(@"PLACEHOLDER_TEXT_OR_NUMBER", nil);
 
     self.textField.manageUnitAndPlaceholder = YES;
     self.textField.unit = numericFormat.unit;
     self.textField.placeholder = placeholder;
-    self.textField.text = displayValue;
+    if (answer != ORKNullAnswerValue()) {
+        if (!answer) {
+            [self assignDefaultAnswer];
+        }
+        else {
+            NSString *displayValue = answer;
+            if ([answer isKindOfClass:[NSNumber class]]) {
+                displayValue = [_numberFormatter stringFromNumber:answer];
+            }
+            
+            self.textField.text = displayValue;
+        }
+    }
 }
 
 #pragma mark - UITextFieldDelegate
