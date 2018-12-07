@@ -45,6 +45,13 @@ static const CGFloat shadowHeight = 0.75;
 
 @implementation ORKNavigationContainerView {
     
+    NSLayoutConstraint *_skipToContinueButtonConstraint;
+    NSLayoutConstraint *_skipToBackButtonConstraint;
+    NSLayoutConstraint *_footnoteToContinueButtonConstraint;
+    NSLayoutConstraint *_footnoteToSkipButtonConstraint;
+    NSLayoutConstraint *_continueButtonHorizontalConstraint;
+    NSLayoutConstraint *_backButtonHorizontalConstraint;
+    
     UIStackView *_parentStackView;
     UIStackView *_subStackView1;
     UIStackView *_subStackView2;
@@ -603,6 +610,9 @@ static const CGFloat shadowHeight = 0.75;
     } else {
         _footnoteToContinueButtonConstraint.active = NO;
         _footnoteToSkipButtonConstraint.active = YES;
+    }
+}
+
 - (void)setCancelButtonItem:(UIBarButtonItem *)cancelButtonItem {
     _cancelButtonItem = cancelButtonItem;
     [_cancelButton setTitle:cancelButtonItem.title ? cancelButtonItem.title : ORKLocalizedString(@"BUTTON_CANCEL", nil) forState:UIControlStateNormal];

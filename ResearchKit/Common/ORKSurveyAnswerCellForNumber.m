@@ -87,6 +87,7 @@
     [self setUpConstraints];
 }
 
+/*
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier
                          step:(ORKQuestionStep *)step
@@ -95,7 +96,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier step:step answer:answer delegate:delegate];
     [self displayFormattedNumber];
     return self;
-}
+}*/
 
 - (void)addPlusMinusAccessoryToField:(UITextField*) field {
     UIView *inputAccesoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 42)];
